@@ -1,0 +1,33 @@
+# Secrets & local env
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Chroma (local / default path)
+chroma_store/
+
+# Project build / scratch output (root only)
+/build/
+
+# Java bytecode under workspace migration output
+workspace/**/*.class
+
+# OS & editors
+.DS_Store
+.idea/
+
+# Logs
+*.log
