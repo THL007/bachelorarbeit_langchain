@@ -1,0 +1,15 @@
+tiktoken
+langchain
+langchain-chroma
+langchain-classic
+langchain-community
+langchain-core
+langchain-neo4j
+langchain-openai
+langchain-text-splitters
+chromadb
+neo4j
+pytest
+tree-sitter>=0.25
+tree-sitter-python
+python-dotenv

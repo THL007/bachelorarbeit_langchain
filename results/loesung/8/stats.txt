@@ -1,0 +1,5 @@
+--- Migration stats (tiktoken) ---
+  Prompt tokens:     1,812,025
+  Completion tokens: 0
+  Total tokens:      1,812,025
+  Time taken:        129.45 s

@@ -1,0 +1,7 @@
+1. Use package com.example.migration; place all output in output/com/example/migration/.
+2. DISPLAY -> System.out.println; STOP RUN -> return.
+3. Datatype mappings (mandatory): PIC 9(n) -> int; PIC S9(*)V*, COMP-3, PACKED-DECIMAL -> java.math.BigDecimal (never double for currency); PIC X(n) -> String.
+4. All variables from COMP- or PACKED-DECIMAL definitions MUST be java.math.BigDecimal.
+5. Use Java naming: CamelCase (not COBOL SCREAMING_SNAKE_CASE).
+6. Use try-with-resources for file operations.
+7. Prefer instance methods and OOP; avoid static where appropriate. Remove COBOL antipatterns.

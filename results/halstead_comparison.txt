@@ -1,0 +1,9 @@
+Halstead comparison (same methodology)
+
+Metric               regel-basiert          loesung
+Difficulty D         398.39                 135.62
+Volume V             1503725.82             136091.10
+Effort E             599061968.75           18457227.90
+eta1                 51                     58
+eta2                 2981                   1064
+N (N1+N2)            130012                 13432

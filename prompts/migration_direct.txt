@@ -1,0 +1,15 @@
+Task: Migrate this entire COBOL file to Java. Produce the full output. Discover the source using your tools.
+
+File to migrate: {rel_path}
+
+Read the COBOL file with run_command (e.g. head/tail/sed in chunks); compare with output the same way.
+
+Related context (from vector search):
+{related_text}
+
+Hints:
+{hints}
+
+Migrate the whole file. Create or update Java file(s) under output/com/example/migration/ as needed. Follow system constraints (comment prefixes, variable names).
+
+**Done when:** (1) Input and output match (every procedure/section/logic has Java counterpart—use run_command to read and grep both). (2) run_command('javac -d output output/com/example/migration/*.java') succeeds. (3) run_command('grep -rnE "TODO|FIXME" output/') finds nothing. (4) Before stopping: read the output Java file with run_command (e.g. head -n 200 output/.../File.java) and confirm in your final response that you have read it and the migration is complete.

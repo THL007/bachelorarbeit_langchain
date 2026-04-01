@@ -1,0 +1,36 @@
+services:
+  neo4j:
+    image: neo4j:5
+    container_name: bachelorarbeit_neo4j
+    ports:
+      - "7474:7474"   # HTTP
+      - "7687:7687"   # Bolt
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-0123456789}
+    volumes:
+      - neo4j_data:/data
+
+  app:
+    build: .
+    container_name: bachelorarbeit_app
+    depends_on:
+      neo4j:
+        condition: service_started
+    environment:
+      NEO4J_URL: neo4j://neo4j:7687
+      NEO4J_USER: ${NEO4J_USER:-neo4j}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-0123456789}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      CHROMA_COLLECTION: ${CHROMA_COLLECTION:-migration_store}
+    env_file:
+      - .env
+    volumes:
+      - ./workspace:/app/workspace
+      - chroma_data:/app/chroma_store
+    # Run once; for interactive use: docker compose run --rm app
+    profiles:
+      - run
+
+volumes:
+  neo4j_data:
+  chroma_data:

@@ -1,0 +1,14 @@
+
+Example 1: Formatting a person's name using MOVE statements
+Name in first-middle-last-order:
+<James                                                       Tiberius                                                    Kirk                                                        >
+
+Example 2: Formatting a person's name using INSPECT and reference modification
+Name in first-middle-last order:
+<James Tiberius Kirk>
+
+Example 3: Formatting a person's name using STRING
+<James Tiberius Kirk                                                                                                                                                                 >
+
+Example 4: Combining INSPECT, STRING, and reference modification
+<James Tiberius Kirk>

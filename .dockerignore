@@ -1,0 +1,26 @@
+# Virtual env and caches
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+
+# Git and IDE
+.git
+.gitignore
+.cursor
+*.md
+!README.md
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Env (use env_file or pass at runtime)
+.env
+.env.*
+
+# Local data (mounted at runtime instead)
+chroma_store

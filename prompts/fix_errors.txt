@@ -1,0 +1,6 @@
+Fix these compilation errors. Edit the Java files under output/com/example/migration/ as needed.
+
+Errors:
+{errors_str}
+
+Use run_command (e.g. cat to read the file, then sed for one-line fixes or cat with here-doc to rewrite the file). Prefer here-doc for multi-line or structural changes. Then stop.

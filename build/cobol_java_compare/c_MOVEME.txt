@@ -1,0 +1,58 @@
+ 
+Results of MOVE statements
+Text values shown in hexadecimal will be in 
+  ASCII when the sample program is run on an 
+  ASCII-based system, and in EBCDIC when run 
+  on an EBCDIC-based system.
+ 
+Example 1
+Result of MOVE 'Repent, Harlequin!' to item defined as PIC X(...)
+Text value: "Repent, Harlequin!"
+ 
+Example 2
+Result of MOVE 375502 to item defined as "PIC S9(09) COMP"
+Hex value: 0005BACE
+ 
+Example 3
+Result of MOVE -281064762375502 to item defined as "PIC S9(16) COMP"
+Hex value: FFFF005F82AE02B2
+ 
+Example 4
+Result of MOVE SPACES that overwrites an item defined as "PIC S9(09) COMP"
+Hex value: 20202020
+ 
+Example 5
+Result of MOVE numeric value to COMP-1 item
+Hex value: EE02F118
+ 
+Example 6
+Result of MOVE numeric value to COMP-2 item
+Hex value: 6D53101C3293043A
+ 
+Example 7
+Result of MOVE -256.095 to item defined as "PIC S9(04)V9(03) COMP-3"
+Hex value: 0256095D
+ 
+Example 8
+Result of MOVE SPACES that overwrites an item defined as "PIC S9(04)V9(03) COMP-3"
+Hex value: 20202020
+ 
+Example 9
+Result of MOVE-4832.61 to item defined as "PIC S9(05)V9(02)" (with implicit USAGE DISPLAY)
+Result: 0483261-
+ 
+Example 10
+Result of MOVE -4832.61 to item defined as "PIC -ZZ,ZZ9.99" (with implicit USAGE DISPLAY)
+Result: - 4,832.61
+ 
+Example 11
+Result of MOVE -4832.61 to item defined as "PIC -$$,$$9.99" (with implicit USAGE DISPLAY)
+Result: -$4,832.61
+ 
+Example 13
+WS-GROUP-ITEM after INITIALIZE statement
+202020202000000C20000C
+ 
+Example 14
+WS-GROUP-ITEM after MOVE SPACES statement
+202020202020202020202020424344000000000B202020202000000C20000C2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020323032303230323032303230323032303230323032303230343234333434303030303030303030423230323032303230323030303030304332303030304332303230323032303230323032303230323032303230323032303230323032

@@ -1,0 +1,23 @@
+Task: Migrate this COBOL scope to Java.
+
+Current scope: {scope_name} ({scope_type}) in {rel_path}
+
+{deps_text}
+
+COBOL code for this scope:
+```
+{scope_code}
+```
+
+Related context (from vector search):
+{related_text}
+
+Concerned Paragraph:
+```
+{source_code}
+```
+
+Hints:
+{hints}
+
+Migrate this scope. Create or update ONE Java file under output/com/example/migration/. Before stopping: read the updated Java file with run_command (e.g. head/tail), then confirm in your final response that you have read it and the scope migration is complete. Follow system constraints (comment prefixes, variable names).

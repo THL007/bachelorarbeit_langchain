@@ -1,0 +1,19 @@
+
+Using CURRENT-DATE function call, MOVE statement:
+IN-INVOICE-DATE <10/15/22> converted to OUT-INV-DATE-YYYY-MM-DD <20221015>
+
+Using Table search, STRING statement:
+IN-PRODUCT-CODE <PK29> converted to OUT-SKU <CC1929>
+
+Using IF/ELSE, SET statement:
+IN-TAXABLE <Y> converted to 
+TAXABLE-ITEM condition name TRUE
+
+Using MOVE statements:
+IN-QUANTITY <3> converted to packed OUT-QUANTITY <3>
+IN-UNIT-PRICE <5.49> converted to packed OUT-UNIT-PRICE <5.49>
+
+Converted record:
+<CC1929    TPastel 29                     ........956A520221015>
+<44333322225567766233222222222222222222222332334333334333333333>
+<3319290000401345C02900000000000000000000035E499009561520221015>

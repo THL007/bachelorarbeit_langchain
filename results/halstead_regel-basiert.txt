@@ -1,0 +1,19 @@
+========================================================================
+Halstead metrics (tokenizer-based) — regel-basiert
+========================================================================
+Root: /Users/thierryloicfoyet/Projects/bachelorarbeit_langchain/results/regel-basiert
+
+Distinct operators (eta1):     51
+Distinct operands (eta2):      2981
+Total operator occurrences N1: 83440
+Total operand occurrences N2:  46572
+Program length N = N1 + N2:    130012
+
+Volume V = N * log2(eta1 + eta2):     1503725.82
+Difficulty D = (eta1/2) * (N2/eta2):  398.39
+Effort E = D * V:                     599061968.75
+
+Notes:
+- Operators: javalang Operator + Separator + keywords (except this/super).
+- Operands: identifiers, literals, this, super.
+- Comparable across folders only under this same definition.

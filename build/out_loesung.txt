@@ -1,0 +1,15 @@
+==============================
+Customer Discount Calculator
+==============================
+
+Enter Customer ID (5 digits): Enter Customer Name: Enter Purchase Amount: 
+--- Calculation Results ---
+Customer: Alice
+Purchase Amount: $5000
+Discount Rate: 0.10%
+Discount Amount: $500.00
+Final Amount: $4500.00
+
+Process another customer? (Y/N): 
+
+Thank you for using the system.

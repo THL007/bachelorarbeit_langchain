@@ -1,0 +1,19 @@
+========================================================================
+Halstead metrics (tokenizer-based) — loesung
+========================================================================
+Root: /Users/thierryloicfoyet/Projects/bachelorarbeit_langchain/results/loesung
+
+Distinct operators (eta1):     58
+Distinct operands (eta2):      1064
+Total operator occurrences N1: 8456
+Total operand occurrences N2:  4976
+Program length N = N1 + N2:    13432
+
+Volume V = N * log2(eta1 + eta2):     136091.10
+Difficulty D = (eta1/2) * (N2/eta2):  135.62
+Effort E = D * V:                     18457227.90
+
+Notes:
+- Operators: javalang Operator + Separator + keywords (except this/super).
+- Operands: identifiers, literals, this, super.
+- Comparable across folders only under this same definition.

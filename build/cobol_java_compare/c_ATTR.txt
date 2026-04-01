@@ -1,0 +1,30 @@
+ 
+Enter attributes of body # 1
+Please enter the mass of the body in KG:
+Please enter the body's velocity on the X axis:
+Please enter the body's velocity on the Y axis:
+Please enter the body's position on the X axis:
+Please enter the body's position on the Y axis:
+ 
+Enter attributes of body # 2
+Please enter the mass of the body in KG:
+Please enter the body's velocity on the X axis:
+Please enter the body's velocity on the Y axis:
+Please enter the body's position on the X axis:
+Please enter the body's position on the Y axis:
+ 
+Body #1 attributes:
+    mass: 1000
+    vx, vy: 0, 0
+    px, py: 0, 0
+ 
+Body #2 attributes:
+    mass: 2000
+    vx, vy: 0, 0
+    px, py: 10, 0
+ 
+Do you want to proceed? (Y/n)
+The distance between the bodies is: 10
+The force of attaction is: 0
+The force along the X axis: 1
+The force along the Y axis: 0

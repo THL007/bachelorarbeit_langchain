@@ -1,0 +1,22 @@
+[root@ab6e0ff4eb5f cobol]# cobj -o /home/bachelorarbeit/results/regel-basiert/2/ ATTRACT.CBL   COND88.CBL    CPSEQVR.CBL   DATE2.CBL     HEX2TEXT.CBL  INVCALC.CBL   NOTBOOL.CBL   STRINGIT.CBL
+ATTRACT.CBL:183: Warning: Line not terminated by a newline
+COND88.CBL:99: Warning: Line not terminated by a newline
+DATE2.CBL:179: Warning: Line not terminated by a newline
+HEX2TEXT.CBL:42: Warning: Line not terminated by a newline
+INVCALC.CBL:173: Warning: Line not terminated by a newline
+NOTBOOL.CBL:184: Warning: Line not terminated by a newline
+STRINGIT.CBL:112: Warning: Line not terminated by a newline
+ATTRACT.CBL:22: Error: COMP-2 not implemented
+ATTRACT.CBL:22: Error: syntax error
+ATTRACT.CBL:24: Error: COMP-2 not implemented
+ATTRACT.CBL:25: Error: COMP-2 not implemented
+ATTRACT.CBL:26: Error: COMP-2 not implemented
+ATTRACT.CBL:28: Error: COMP-2 not implemented
+ATTRACT.CBL:30: Error: COMP-2 not implemented
+ATTRACT.CBL:32: Error: COMP-2 not implemented
+ATTRACT.CBL:33: Error: COMP-2 not implemented
+ATTRACT.CBL:38: Error: COMP-2 not implemented
+ATTRACT.CBL:40: Error: COMP-2 not implemented
+ATTRACT.CBL:41: Error: COMP-2 not implemented
+ATTRACT.CBL:43: Error: COMP-2 not implemented
+ATTRACT.CBL:44: Error: COMP-2 not implemented

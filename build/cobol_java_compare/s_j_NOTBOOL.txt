@@ -1,0 +1,13 @@
+Example2 Answer: true
+Example2 Toggle: ex2Flag=' '
+Example3 Answer: yes
+Example3 Second Style Answer: yes
+Example3 Toggle: ex3Flag='N'
+Example4 Answer: true
+Example4 Toggle: ex4Flag='0'
+Example5 Answer: true
+Example5 Toggle: ex5Field=' '
+Example6 Answer: true
+Example6 Toggle: ex6Flag='F', ex5Field=' '
+Example7 Answer: true
+Example7 Toggle: ex7Flag=-1
