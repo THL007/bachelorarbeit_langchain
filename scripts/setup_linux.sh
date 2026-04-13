@@ -278,8 +278,8 @@ install_tree_sitter_cli() {
     apt_install nodejs
   fi
   node --version
-  log "Installing @tree-sitter/cli globally…"
-  sudo npm install -g @tree-sitter/cli
+  log "Installing tree-sitter-cli globally…"
+  sudo npm install -g tree-sitter-cli
   tree-sitter --version
 }
 
