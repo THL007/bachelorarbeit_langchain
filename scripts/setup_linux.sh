@@ -98,17 +98,20 @@ apt_install \
 # --- Python 3.12 ---
 install_python312() {
   if need_cmd python3.12; then
-    log "python3.12 already on PATH."
-    return
-  fi
-  log "Installing Python 3.12…"
-  if apt-cache show python3.12 &>/dev/null; then
-    apt_install python3.12 python3.12-venv python3.12-dev
+    log "python3.12 already on PATH; ensuring python3.12-venv and python3.12-dev (needed for venv/ensurepip)…"
+    if apt-cache show python3.12-venv &>/dev/null; then
+      apt_install python3.12-venv python3.12-dev
+    fi
   else
-    log "Adding deadsnakes PPA for Python 3.12…"
-    sudo add-apt-repository -y ppa:deadsnakes/ppa
-    APT_UPDATE_RAN=0
-    apt_install python3.12 python3.12-venv python3.12-dev
+    log "Installing Python 3.12…"
+    if apt-cache show python3.12 &>/dev/null; then
+      apt_install python3.12 python3.12-venv python3.12-dev
+    else
+      log "Adding deadsnakes PPA for Python 3.12…"
+      sudo add-apt-repository -y ppa:deadsnakes/ppa
+      APT_UPDATE_RAN=0
+      apt_install python3.12 python3.12-venv python3.12-dev
+    fi
   fi
 }
 
