@@ -17,6 +17,9 @@ from langchain_neo4j import Neo4jGraph
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+# Chroma's Rust backend caps upsert batch size (often ~5k); stay under it.
+_CHROMA_ADD_BATCH_SIZE = 4000
+
 
 def _node_id_to_name(node_id: str) -> str:
     return node_id.split(":", 1)[-1] if ":" in node_id else node_id
@@ -82,6 +85,10 @@ class KnowledgeStores:
             refresh_schema=False,
         )
 
+    def _add_documents_batched(self, chunks: List[Document]) -> None:
+        for i in range(0, len(chunks), _CHROMA_ADD_BATCH_SIZE):
+            self.vectorstore.add_documents(chunks[i : i + _CHROMA_ADD_BATCH_SIZE])
+
     def index_file(self, filepath: str, source_type: str = "file") -> None:
         safe_path = self.config.workspace_dir / filepath
         if not safe_path.exists() or not safe_path.is_file():
@@ -92,7 +99,7 @@ class KnowledgeStores:
         splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=120)
         chunks = splitter.split_documents([doc])
         if chunks:
-            self.vectorstore.add_documents(chunks)
+            self._add_documents_batched(chunks)
 
         self.graph.query("MATCH (n {source: $source}) DETACH DELETE n", params={"source": filepath})
         self.graph.query(
@@ -122,7 +129,7 @@ class KnowledgeStores:
         splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=120)
         chunks = splitter.split_documents(docs)
         if chunks:
-            self.vectorstore.add_documents(chunks)
+            self._add_documents_batched(chunks)
 
     def chroma_search(self, query: str, k: int = 6) -> List[Dict[str, Any]]:
         retriever = self.vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": k})
