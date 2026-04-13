@@ -22,6 +22,27 @@ def _node_id_to_name(node_id: str) -> str:
     return node_id.split(":", 1)[-1] if ":" in node_id else node_id
 
 
+def _read_workspace_text(path: Path) -> str:
+    """Read workspace file text; COBOL sources may be UTF-8, Latin-1, or Windows-1252."""
+    data = path.read_bytes()
+    if not data:
+        return ""
+    for encoding in (
+        "utf-8",
+        "utf-8-sig",
+        "utf-16",
+        "utf-16-le",
+        "utf-16-be",
+        "cp1252",
+    ):
+        try:
+            return data.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    # Any byte sequence is valid in Latin-1 (legacy mainframe/PC exports).
+    return data.decode("iso-8859-1")
+
+
 @dataclass
 class KnowledgeConfig:
     workspace_dir: Path
@@ -65,7 +86,7 @@ class KnowledgeStores:
         safe_path = self.config.workspace_dir / filepath
         if not safe_path.exists() or not safe_path.is_file():
             return
-        content = safe_path.read_text(encoding="utf-8")
+        content = _read_workspace_text(safe_path)
 
         doc = Document(page_content=content, metadata={"source": filepath, "type": source_type})
         splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=120)

@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import os
+import sys
 import re
 import subprocess
 import time
@@ -33,6 +34,8 @@ def _load_module(file_name: str, module_name: str):
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Could not load module {file_name}")
     module = importlib.util.module_from_spec(spec)
+    # Required before exec_module: dataclasses look up sys.modules[cls.__module__].
+    sys.modules[module_name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -331,13 +334,15 @@ class MigrationReasoningEngine:
             ).invoke(query)
             related_text = "\n".join([d.page_content for d in related_docs])
 
+            snippet = scope.code_snippet or ""
             input_text = self.prompt_manager.get_formatted(
                 "migration_scope",
                 scope_name=scope.name,
                 scope_type=scope.scope_type,
                 rel_path=rel_path,
                 deps_text=deps_text,
-                scope_code=scope.code_snippet or "",
+                scope_code=snippet,
+                source_code=snippet,
                 related_text=related_text,
                 hints=hints,
             )

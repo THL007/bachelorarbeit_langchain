@@ -10,6 +10,7 @@ so behavior remains stable while the architecture is split into 4 stages.
 from __future__ import annotations
 
 import importlib.util
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -48,6 +49,7 @@ def _load_legacy_extractor():
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Could not load extractor module from {extractor_path}")
     module = importlib.util.module_from_spec(spec)
+    sys.modules["legacy_extractor"] = module
     spec.loader.exec_module(module)
     return module
 
