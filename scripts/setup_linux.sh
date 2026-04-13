@@ -5,7 +5,7 @@
 #   - OpenJDK 17
 #   - GnuCOBOL 3.2.0 (from source; set SKIP_GNUCOBOL_SOURCE=1 to use distro package only)
 #   - Docker + Neo4j (docker compose) started in the background
-#   - Build tools + tree-sitter CLI + compile tree-sitter-cobol → cobol.so
+#   - Node (only if needed) + tree-sitter-cli via npm in tree-sitter-cobol → cobol.so
 #
 # Usage (from anywhere):
 #   curl -fsSL ... > setup_linux.sh   # or clone the repo first
@@ -17,6 +17,7 @@
 #   SKIP_GNUCOBOL_SOURCE=1   Skip building GnuCOBOL 3.2 from tarball; install distro gnucobol only
 #   SKIP_DOCKER=1            Do not install/start Docker or Neo4j
 #   SKIP_NEO4J_START=1       Install Docker but do not run docker compose up
+#   SKIP_TREE_SITTER_BUILD=1 Skip generating/building cobol.so (fails if tree-sitter-cobol/cobol.so is missing)
 #
 
 set -euo pipefail
@@ -255,14 +256,10 @@ else
   fi
 fi
 
-# --- Node + tree-sitter CLI (for cobol.so) ---
-install_tree_sitter_cli() {
-  if need_cmd tree-sitter; then
-    log "tree-sitter CLI already on PATH."
-    tree-sitter --version
-    return
-  fi
-  log "Installing Node.js (for tree-sitter CLI; needs Node 18+)…"
+# --- tree-sitter COBOL native parser (cobol.so) ---
+# grammar.js alone is not sufficient: 1_extractor.py loads cobol.so (Linux), built from this grammar.
+ensure_node_18() {
+  log "Ensuring Node.js 18+ (for tree-sitter-cli in tree-sitter-cobol)…"
   local need_node_repo=0
   if need_cmd node; then
     major="$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)"
@@ -278,25 +275,35 @@ install_tree_sitter_cli() {
     apt_install nodejs
   fi
   node --version
-  log "Installing tree-sitter-cli globally…"
-  sudo npm install -g tree-sitter-cli
-  tree-sitter --version
 }
 
 build_cobol_grammar() {
   local gdir="$REPO_ROOT/tree-sitter-cobol"
   [[ -d "$gdir" ]] || die "Missing $gdir"
-  log "Generating and building tree-sitter COBOL parser → cobol.so …"
+
+  if [[ "${SKIP_TREE_SITTER_BUILD:-}" == "1" ]]; then
+    log "SKIP_TREE_SITTER_BUILD=1: skipping tree-sitter generate/build."
+    [[ -f "$gdir/cobol.so" ]] || die "No $gdir/cobol.so — build once on this machine (remove SKIP_TREE_SITTER_BUILD) or supply a Linux cobol.so."
+    return
+  fi
+
+  if [[ -f "$gdir/cobol.so" ]]; then
+    log "tree-sitter-cobol/cobol.so already present — skipping generate/build."
+    return
+  fi
+
+  ensure_node_18
+  log "Installing tree-sitter-cli via npm in tree-sitter-cobol, then building cobol.so …"
   (
     cd "$gdir"
-    tree-sitter generate
-    tree-sitter build -o cobol.so
+    npm install
+    npx tree-sitter generate
+    npx tree-sitter build -o cobol.so
   )
   [[ -f "$gdir/cobol.so" ]] || die "cobol.so not produced in $gdir"
   log "Parser library: $gdir/cobol.so"
 }
 
-install_tree_sitter_cli
 build_cobol_grammar
 
 # --- Python venv + requirements ---
