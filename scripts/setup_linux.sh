@@ -191,13 +191,40 @@ else
 fi
 
 # --- Docker + Neo4j ---
+# Prefer Docker Compose v2 (`docker compose`); many Debian images lack docker-compose-plugin in default APT.
+compose_up_neo4j() {
+  local dcfile="$REPO_ROOT/docker-compose.yml"
+  if sudo docker compose version &>/dev/null; then
+    sudo docker compose -f "$dcfile" up -d neo4j \
+      || docker compose -f "$dcfile" up -d neo4j
+  elif need_cmd docker-compose; then
+    sudo docker-compose -f "$dcfile" up -d neo4j \
+      || docker-compose -f "$dcfile" up -d neo4j
+  else
+    die "Docker is installed but neither 'docker compose' nor docker-compose is available. Install docker-compose-plugin or docker-compose from your distro."
+  fi
+}
+
 install_docker() {
   if need_cmd docker; then
     log "docker already installed."
     return
   fi
-  log "Installing Docker (Engine + compose plugin)…"
-  apt_install docker.io docker-compose-plugin
+  log "Installing Docker Engine (docker.io)…"
+  apt_install docker.io
+
+  log "Installing Compose (plugin preferred, else standalone docker-compose)…"
+  if apt-cache show docker-compose-plugin &>/dev/null; then
+    apt_install docker-compose-plugin
+  elif apt-cache show docker-compose-v2 &>/dev/null; then
+    apt_install docker-compose-v2
+  elif apt-cache show docker-compose &>/dev/null; then
+    log "docker-compose-plugin not in APT; using standalone docker-compose."
+    apt_install docker-compose
+  else
+    die "No compose package found (tried docker-compose-plugin, docker-compose-v2, docker-compose). Add Docker's APT repo or install compose manually."
+  fi
+
   sudo systemctl enable docker --now 2>/dev/null || sudo service docker start 2>/dev/null || true
   if ! groups "$USER" | grep -q '\bdocker\b'; then
     log "Adding user $USER to group docker (log out/in to apply)…"
@@ -213,9 +240,7 @@ start_neo4j() {
   if ! need_cmd docker; then
     die "docker not found after install."
   fi
-  # shellcheck disable=SC2015
-  sudo docker compose -f "$REPO_ROOT/docker-compose.yml" up -d neo4j \
-    || docker compose -f "$REPO_ROOT/docker-compose.yml" up -d neo4j
+  compose_up_neo4j
   log "Neo4j Bolt: neo4j://localhost:7687  Browser: http://localhost:7474"
 }
 
